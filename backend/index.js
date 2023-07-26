@@ -16,20 +16,27 @@ app.use(express.json());
 app.get("/api/getNameAndBalance", async (req, res) => {
   const { userAddress } = req.query;
 
-  const response = await Moralis.EvmApi.utils.runContractFunction({
-    chain: "0x13881", // hex of polygon mumbai chain id
-    address: contractAddress,
-    functionName: "getMyName",
-    abi: ABI,
-    params: { _user: userAddress },
-  });
+  try {
+    // from Moralis doc, this how we create the request to query the data
+    const response = await Moralis.EvmApi.utils.runContractFunction({
+      chain: "0x13881", // hex of polygon mumbai chain id
+      address: contractAddress,
+      functionName: "getMyName", // function name
+      abi: ABI,
+      params: { _user: userAddress }, // passing parameter
+    });
 
-  // response.jsonResponse - contains the result
-  res.status(200).json({
-    name: response.jsonResponse[0],
-  });
+    // response.jsonResponse - contains the result
+    // sending json response back to client
+    res.status(200).json({
+      name: response.jsonResponse[0], // as per our contract 0 th index is name and 1 st index is a boolean value
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
 });
 
+// Starting Moralis and Server
 const startServer = async () => {
   await Moralis.start({
     apiKey: API_KEY,
