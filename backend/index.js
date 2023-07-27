@@ -54,6 +54,36 @@ app.get("/api/NameandBalance/:address", async (req, res) => {
   }
 });
 
+app.get("/api/myHistory/:address", async (req, res) => {
+  const { address } = req.params;
+
+  try {
+    const response = await Moralis.EvmApi.utils.runContractFunction({
+      chain: "0x13881", // hex of polygon mumbai chain id
+      address: contractAddress,
+      functionName: "getHistory", // function name
+      abi: ABI,
+      params: { _user: address }, // passing parameter
+    });
+
+    // creating array of objects using response
+    const data = response.raw.map((history, index) => {
+      return {
+        key: index,
+        type: history[0],
+        amount: history[1],
+        message: history[2],
+        address: history[3],
+        name: history[4],
+      };
+    });
+
+    res.json(data);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 // Starting Moralis and Server
 const startServer = async () => {
   await Moralis.start({
