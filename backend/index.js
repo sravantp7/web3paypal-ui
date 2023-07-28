@@ -13,8 +13,12 @@ const API_KEY = process.env.API_KEY;
 app.use(cors());
 app.use(express.json());
 
-app.get("/api/NameandBalance/:address", async (req, res) => {
+app.get("/api/nameandbalance/:address", async (req, res) => {
   const { address } = req.params;
+
+  if (!address || address.length != 42) {
+    res.status(400).json({ msg: "Invalid Wallet Address" });
+  }
 
   try {
     // from Moralis doc, this how we create the request to query the data
@@ -38,8 +42,6 @@ app.get("/api/NameandBalance/:address", async (req, res) => {
       address: "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
     });
 
-    console.log(response3.raw);
-
     const balance = (response2.raw.balance / 1e18).toFixed(2);
 
     // response.jsonResponse - contains the result
@@ -49,13 +51,18 @@ app.get("/api/NameandBalance/:address", async (req, res) => {
       balance: balance,
       usdPrice: (response3.raw.usdPrice * balance).toFixed(2),
     });
-  } catch (error) {
-    console.error(error.message);
+  } catch (err) {
+    console.error(err.message);
+    res.status(404).end();
   }
 });
 
-app.get("/api/myHistory/:address", async (req, res) => {
+app.get("/api/history/:address", async (req, res) => {
   const { address } = req.params;
+
+  if (!address || address.length != 42) {
+    res.status(400).json({ msg: "Invalid Wallet address" });
+  }
 
   try {
     const response = await Moralis.EvmApi.utils.runContractFunction({
@@ -69,7 +76,7 @@ app.get("/api/myHistory/:address", async (req, res) => {
     // creating array of objects using response
     const data = response.raw.map((history, index) => {
       return {
-        key: index,
+        key: index + 1,
         type: history[0],
         amount: history[1],
         message: history[2],
@@ -78,9 +85,43 @@ app.get("/api/myHistory/:address", async (req, res) => {
       };
     });
 
-    res.json(data);
-  } catch (error) {
-    console.log(error.message);
+    res.json(data.reverse());
+  } catch (err) {
+    console.error(err.message);
+    res.status(404).end();
+  }
+});
+
+// Fetch all requests that is available for the given address
+app.get("/api/requests/:address", async (req, res) => {
+  const { address } = req.params;
+
+  if (!address || address.length != 42) {
+    res.status(400).json({ msg: "Invalid Wallet address" });
+  }
+
+  try {
+    const response = await Moralis.EvmApi.utils.runContractFunction({
+      chain: "0x13881", // hex of polygon mumbai chain id
+      address: contractAddress,
+      functionName: "getMyRequests", // function name
+      abi: ABI,
+      params: { _user: address }, // passing parameter
+    });
+
+    const formattedData = [];
+    for (let i = 0; i < response.raw["0"].length; i++) {
+      const obj = {};
+      obj.requestor = response.raw["0"][i];
+      obj.amount = response.raw["1"][i];
+      obj.message = response.raw["2"][i];
+      obj.requestorName = response.raw["3"][i];
+      formattedData.push(obj);
+    }
+    res.status(200).json(formattedData);
+  } catch (err) {
+    console.error(err.message);
+    res.status(404).end();
   }
 });
 
@@ -91,7 +132,7 @@ const startServer = async () => {
   });
 
   app.listen(PORT, (err) => {
-    if (err) console.error(err);
+    if (err) console.error(err.message);
     console.log(`Server is Running on Port: ${PORT}`);
   });
 };
