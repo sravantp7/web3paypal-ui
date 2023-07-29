@@ -7,6 +7,7 @@ import axios from "axios";
 import { Layout, Button } from "antd";
 
 import CurrentBalance from "@/components/CurrentBalance";
+import RecentActivity from "@/components/RecentActivity";
 
 // api used to fetch user details from paypal contract
 const NAME_BALANCE_API = "http://localhost:3001/api/NameandBalance/";
@@ -103,12 +104,12 @@ export default function Home() {
                   <CurrentBalance dollars={dollars} />
                 </div>
                 <div className="secondColumn">
-
+                  <RecentActivity history={history} />
                 </div>
               </>
             ) : (
               <div>
-
+                Please Login
               </div>
             )
           }
