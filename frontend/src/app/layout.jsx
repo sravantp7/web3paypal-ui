@@ -1,9 +1,9 @@
 "use client";
 
 import { WagmiConfig, createConfig, configureChains, mainnet } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
 import { polygon, polygonMumbai } from 'wagmi/chains';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
 
 import "./global.css";
 
@@ -14,13 +14,14 @@ export const metadata = {
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet, polygon, polygonMumbai],
-  [publicProvider()]
+  [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API })]
 );
 
 const config = createConfig({
   autoConnect: true,
   connectors: [
-    new MetaMaskConnector({ chains })],
+    new MetaMaskConnector({ chains })
+  ],
   publicClient,
   webSocketPublicClient,
 })

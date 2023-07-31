@@ -85,3 +85,49 @@
     background-color: #31579E;
     color: white;
 }
+
+.accountDetailRow {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    margin-left: 25px;
+    gap: 30px;
+}
+  
+.accountDetailHead {
+    font-weight: 700;
+    font-size: 16px;
+    color: #4f4f4f;
+}
+  
+.accountDetailBody {
+    color: #767676;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.requestAndPay {
+    width: 100%; 
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+  
+.quickOption {
+    background-color: #31579E;
+    height:100px;
+    width: 100px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    position: relative;
+}

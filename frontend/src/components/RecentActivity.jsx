@@ -25,6 +25,11 @@ const columns = [
       title: "Address",
       dataIndex: "address",
       key: "address",
+      render: (_, record) => (
+        <div>
+          {record.address.slice(0, 4)}...{record.address.slice(38)}
+        </div>
+      ),
     },
   
     {
@@ -38,7 +43,7 @@ const columns = [
       render: (_, record) => (
         <div style={record.type === "-" ? { color: "red" } : { color: "green" }} >
           {record.type}
-          {record.amount} Wei
+          {record.amount / 1e18} Matic
         </div>
       ),
     },

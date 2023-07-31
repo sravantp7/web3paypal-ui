@@ -8,6 +8,8 @@ import { Layout, Button } from "antd";
 
 import CurrentBalance from "@/components/CurrentBalance";
 import RecentActivity from "@/components/RecentActivity";
+import AccountDetails from "@/components/AccountDetails";
+import RequestAndPay from "@/components/RequestAndPay";
 
 // api used to fetch user details from paypal contract
 const NAME_BALANCE_API = "http://localhost:3001/api/NameandBalance/";
@@ -62,7 +64,9 @@ export default function Home() {
       res = await axios.get(`${REQUESTS_API}${address}`);
       data = res.data;
       setRequests(data);
-    } catch (err) {console.error(err.message)}
+    } catch (err) {
+      console.error(err.message)
+    }
 
   }
 
@@ -102,6 +106,12 @@ export default function Home() {
               <>
                 <div className="firstColumn">
                   <CurrentBalance dollars={dollars} />
+                  <RequestAndPay requests={requests} getDetails={getDetails} />
+                  <AccountDetails
+                    address={address}
+                    name={name}
+                    balance={balance}
+                  />
                 </div>
                 <div className="secondColumn">
                   <RecentActivity history={history} />
@@ -109,7 +119,7 @@ export default function Home() {
               </>
             ) : (
               <div>
-                Please Login
+                Please Connect your Wallet
               </div>
             )
           }
