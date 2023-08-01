@@ -111,6 +111,7 @@ export default function Home() {
                     address={address}
                     name={name}
                     balance={balance}
+                    getDetails={getDetails}
                   />
                 </div>
                 <div className="secondColumn">
@@ -118,7 +119,7 @@ export default function Home() {
                 </div>
               </>
             ) : (
-              <div>
+              <div className="connectText">
                 Please Connect your Wallet
               </div>
             )
