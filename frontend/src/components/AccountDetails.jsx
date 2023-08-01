@@ -11,7 +11,6 @@ import ABI from "./abi.json";
 const ADDRESS = "0x437a10e0B3ac1bf8c9B582Ba7FD4a1A815Dfc56C";
 
 export default function AccountDetails({ address, name, balance, getDetails }) {
-
   const [nameModal, setNameModal] = useState(false);
   const [username, setUserName] = useState("");
 

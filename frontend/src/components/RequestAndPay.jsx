@@ -7,21 +7,11 @@ import ABI from "./abi.json";
 
 const ADDRESS = "0x437a10e0B3ac1bf8c9B582Ba7FD4a1A815Dfc56C";
 
-export default function RequestAndPay({requests, getDetails}) {
+export default function RequestAndPay({requests, getDetails, payWindow, setPayWindow}) {
     const [requestModal, setRequestModal] = useState(false);
     const [requestAmount, setRequestAmount] = useState(0);
     const [requestAddress, setRequestAddress] = useState("");
     const [requestMessage, setRequestMessage] = useState("");
-
-        // Pay request
-    // const { config } = usePrepareContractWrite({
-    //     chainId: polygonMumbai.id,
-    //     address: ADDRESS,
-    //     abi: ABI,
-    //     functionName: "payRequest",
-    //     args: [0],
-    //     value: 0
-    // });
 
     const showRequestModal = () => {
         setRequestModal(true);
@@ -72,6 +62,10 @@ export default function RequestAndPay({requests, getDetails}) {
                     <Input placeholder="Lunch Bill..." value={requestMessage} onChange={(val)=>setRequestMessage(val.target.value)}/>
             </Modal>
             <div className="requestAndPay">
+                <div className="quickOption" onClick={() => setPayWindow(!payWindow)}>
+                    <DollarOutlined style={{ fontSize: "26px" }} />
+                    Pay
+                </div>
                 <div className="quickOption" onClick={showRequestModal}>
                     <SwapOutlined style={{ fontSize: "26px" }} />
                     Request

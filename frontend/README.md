@@ -1,1 +1,1 @@
-# Web3Paypal
+# Web3Paypal Frontend

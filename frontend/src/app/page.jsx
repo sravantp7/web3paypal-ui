@@ -10,6 +10,7 @@ import CurrentBalance from "@/components/CurrentBalance";
 import RecentActivity from "@/components/RecentActivity";
 import AccountDetails from "@/components/AccountDetails";
 import RequestAndPay from "@/components/RequestAndPay";
+import RequestsPage from "@/components/RequestsPage";
 
 // api used to fetch user details from paypal contract
 const NAME_BALANCE_API = "http://localhost:3001/api/NameandBalance/";
@@ -31,6 +32,8 @@ export default function Home() {
   const [dollars, setDollars] = useState("");
   const [history, setHistory] = useState(null);
   const [requests, setRequests] = useState(null);
+
+  const [payWindow, setPayWindow] = useState(false);
 
   // disconnect wallet
   function disconnectWallet() {
@@ -106,7 +109,7 @@ export default function Home() {
               <>
                 <div className="firstColumn">
                   <CurrentBalance dollars={dollars} />
-                  <RequestAndPay requests={requests} getDetails={getDetails} />
+                  <RequestAndPay requests={requests} getDetails={getDetails} payWindow={payWindow} setPayWindow={setPayWindow} />
                   <AccountDetails
                     address={address}
                     name={name}
@@ -115,7 +118,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="secondColumn">
-                  <RecentActivity history={history} />
+                  { payWindow ? <RequestsPage requests={requests} getDetails={getDetails} /> : <RecentActivity history={history} /> }
                 </div>
               </>
             ) : (
