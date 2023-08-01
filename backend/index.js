@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require("express");
 const Moralis = require("moralis").default; // importing moralis for querying the data from contract
 require("dotenv").config();
@@ -5,7 +7,7 @@ const cors = require("cors");
 const PORT = 3001;
 const app = express();
 const ABI = require("./abi.json"); // importing contract abi
-const contractAddress = "0xE6189E1925cA3aD75f714e3338D865E5192bEF37";
+const contractAddress = "0x437a10e0B3ac1bf8c9B582Ba7FD4a1A815Dfc56C"; // web3Paypal contract address
 
 // Moralis API key
 const API_KEY = process.env.API_KEY;
