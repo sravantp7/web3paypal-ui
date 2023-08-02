@@ -7,11 +7,6 @@ import { alchemyProvider } from 'wagmi/providers/alchemy';
 
 import "./global.css";
 
-export const metadata = {
-  title: "Web3Paypal",
-  description: "My Web3Paypal Application",
-};
-
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet, polygon, polygonMumbai],
   [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API })]
