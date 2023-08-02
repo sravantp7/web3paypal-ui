@@ -4,7 +4,7 @@ const express = require("express");
 const Moralis = require("moralis").default; // importing moralis for querying the data from contract
 require("dotenv").config();
 const cors = require("cors");
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const app = express();
 const ABI = require("./abi.json"); // importing contract abi
 const contractAddress = "0x437a10e0B3ac1bf8c9B582Ba7FD4a1A815Dfc56C"; // web3Paypal contract address
@@ -114,6 +114,7 @@ app.get("/api/requests/:address", async (req, res) => {
     const formattedData = [];
     for (let i = 0; i < response.raw["0"].length; i++) {
       const obj = {};
+      obj.id = i;
       obj.requestor = response.raw["0"][i];
       obj.amount = response.raw["1"][i];
       obj.message = response.raw["2"][i];
