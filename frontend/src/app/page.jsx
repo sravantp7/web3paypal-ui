@@ -13,9 +13,9 @@ import RequestAndPay from "@/components/RequestAndPay";
 import RequestsPage from "@/components/RequestsPage";
 
 // api used to fetch user details from paypal contract
-const NAME_BALANCE_API = "http://localhost:3001/api/NameandBalance/";
-const HISTORY_API = "http://localhost:3001/api/history/";
-const REQUESTS_API = "http://localhost:3001/api/requests/";
+const NAME_BALANCE_API = "https://web3paypal.vercel.app/api/NameandBalance/";
+const HISTORY_API = "https://web3paypal.vercel.app/api/history/";
+const REQUESTS_API = "https://web3paypal.vercel.app/api/requests/";
 
 export default function Home() {
   const { Header, Content } = Layout;
