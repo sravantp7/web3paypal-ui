@@ -28,6 +28,13 @@ code {
     min-height: 100vh;
 }
 
+.logo {
+    font-size: 35px;
+    color: blue;
+    font-weight: bold;
+    margin-left: -20px;
+}
+
 .header {
     background-color: white;
     display: flex;

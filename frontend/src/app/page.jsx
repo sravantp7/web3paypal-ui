@@ -83,6 +83,7 @@ export default function Home() {
       <Layout>
         <Header className="header">
           <div className="headerLeft">
+            <div className="logo">Web3Paypal</div>
             {isConnected && (
               <>
                 <div
