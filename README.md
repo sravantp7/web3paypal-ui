@@ -12,3 +12,6 @@ Home Page
 
 Set Name
 ![Set-Name-Page.png](https://i.postimg.cc/13YjRLPk/Set-Name-Page.png)
+
+Pay Window
+![pay-Window.png](https://i.postimg.cc/vTjBN0YN/pay-Window.png)
